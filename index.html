@@ -527,13 +527,11 @@ async function initFirebaseAndContinue(config){
     db = getFirestore(app);
     storage = getStorage(app);
   } catch(e){
-    $('setupErr').textContent = 'Erro ao conectar: ' + e.message;
-    $('setupErr').classList.add('show');
+    alert('Erro ao inicializar o Firebase: ' + e.message);
     return;
   }
 
   // Verificar se grid já existe
-  hide($('setupOverlay'));
   try {
     const snap = await getDoc(doc(db, 'grids', GRID_ID));
     if(!snap.exists()){
@@ -544,7 +542,7 @@ async function initFirebaseAndContinue(config){
       show($('loginOverlay'));
     }
   } catch(e){
-    alert('Erro ao acessar o Firestore: ' + e.message);
+    alert('Erro ao acessar o Firestore: ' + e.message + '\n\nVerifique se o Firestore está habilitado no Firebase.');
   }
 }
 
